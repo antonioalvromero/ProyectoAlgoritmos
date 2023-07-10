@@ -3,7 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Domain;
-
+import java.nio.charset.Charset;
 /**
  *
  * @author tonir

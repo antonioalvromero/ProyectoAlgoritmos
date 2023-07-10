@@ -6,7 +6,7 @@ package Domain;
 
 import java.util.*;
 import java.io.*;
-
+import java.nio.charset.Charset;
 public class EnsambladorDeFragmentos {
 
     private List<String> fragmentos; // Lista de fragmentos cargados

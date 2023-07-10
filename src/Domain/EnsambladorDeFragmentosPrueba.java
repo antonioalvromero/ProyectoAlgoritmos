@@ -5,7 +5,7 @@ import java.io.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
+import java.nio.charset.Charset;
 public class EnsambladorDeFragmentosPrueba {
 
     private NodoFragmento inicio; // Inicio de la lista enlazada de fragmentos cargados
@@ -376,6 +376,7 @@ public class EnsambladorDeFragmentosPrueba {
             }
             actual = actual.getSiguiente();
         }
+        System.out.println("Domain.EnsambladorDeFragmentosPrueba.filtrarPorLongitud()");
     }
 
 // Buscar fragmentos por palabras clave
