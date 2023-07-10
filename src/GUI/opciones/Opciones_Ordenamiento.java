@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package model.GUI.opciones;
+package GUI.opciones;
 
-import model.GUI.GUICargando;
-import model.business.CABYSApplicationOrdering;
 
-import model.business.Nodo;
+
 
 public final class Opciones_Ordenamiento extends javax.swing.JPanel {
 

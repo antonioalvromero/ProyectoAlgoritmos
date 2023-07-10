@@ -5,23 +5,50 @@
  */
 package GUI;
 
-import java.awt.BorderLayout;
+import java.io.File;
+import java.io.FileDescriptor;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import Domain.*;
+import GUI.opciones.Op1;
+import java.awt.BorderLayout;
+import javax.swing.JOptionPane;
 
 public final class Menu extends javax.swing.JFrame {
 
+    String address = "";
+    EnsambladorDeFragmentosPrueba ensamblador;
+
     public Menu() {
-        GUICargando gc = new GUICargando();
 
         super.setUndecorated(false);
         initComponents();
         super.setLocationRelativeTo(null);
-        // derechos();
+        super.setResizable(false);
+        derechos();
         this.setVisible(true);
         //  getjLabel4().setText("Codigos registrados: " + arbol.getTamano());
-        gc.dispose();
+
+    }
+
+    public Menu(boolean check) {
+
+        ensamblador = new EnsambladorDeFragmentosPrueba();
+        super.setUndecorated(false);
+        initComponents();
+        super.setLocationRelativeTo(null);
+        super.setResizable(false);
+        derechos();
+        this.setVisible(true);
+        //  getjLabel4().setText("Codigos registrados: " + arbol.getTamano());
+
     }
 
     /**
@@ -35,12 +62,14 @@ public final class Menu extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jlabelDerechos = new javax.swing.JLabel();
+        jlabelDerechos1 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         titu1 = new javax.swing.JLabel();
-        titu2 = new javax.swing.JLabel();
+        titu3 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
-        jlUser = new javax.swing.JLabel();
+        titu2 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jlabelDerechos = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPanel_Menu = new javax.swing.JPanel();
@@ -51,12 +80,15 @@ public final class Menu extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 1, 0, 0, new java.awt.Color(0, 0, 0)));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jlabelDerechos.setBackground(new java.awt.Color(255, 255, 255));
-        jlabelDerechos.setFont(new java.awt.Font("Dialog", 1, 9)); // NOI18N
-        jlabelDerechos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel2.add(jlabelDerechos, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 220, 30));
+        jlabelDerechos1.setBackground(new java.awt.Color(255, 255, 255));
+        jlabelDerechos1.setFont(new java.awt.Font("Dialog", 1, 9)); // NOI18N
+        jlabelDerechos1.setForeground(new java.awt.Color(0, 0, 0));
+        jlabelDerechos1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jlabelDerechos1.setText("Antony Monge, Anthonio Alvarez");
+        jPanel2.add(jlabelDerechos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 580, 190, 20));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 102)));
@@ -69,19 +101,19 @@ public final class Menu extends javax.swing.JFrame {
         titu1.setText("Ensamblaje");
         jPanel5.add(titu1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 140, -1));
 
-        titu2.setBackground(new java.awt.Color(0, 102, 102));
-        titu2.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
-        titu2.setForeground(new java.awt.Color(0, 0, 0));
-        titu2.setText("de Fragmentos");
-        jPanel5.add(titu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 180, 30));
+        titu3.setBackground(new java.awt.Color(0, 102, 102));
+        titu3.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
+        titu3.setForeground(new java.awt.Color(0, 0, 0));
+        titu3.setText("de Fragmentos");
+        jPanel5.add(titu3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 180, 40));
 
-        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 60));
+        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 220, 60));
 
-        jComboBox1.setBackground(new java.awt.Color(0, 0, 0));
+        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
         jComboBox1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
-        jComboBox1.setForeground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "  Opciones", "1. Ingresar " }));
-        jComboBox1.setBorder(new javax.swing.border.MatteBorder(null));
+        jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "  Opciones", "1. Cargar fragmentos" }));
+        jComboBox1.setBorder(null);
         jComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jComboBox1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -99,16 +131,40 @@ public final class Menu extends javax.swing.JFrame {
                 jComboBox1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 200, 40));
+        jPanel2.add(jComboBox1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 200, 40));
 
-        jlUser.setBackground(new java.awt.Color(0, 0, 255));
-        jlUser.setFont(new java.awt.Font("Dialog", 1, 24)); // NOI18N
-        jlUser.setForeground(new java.awt.Color(0, 0, 0));
-        jlUser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/GUI/ico/usuario (1).png"))); // NOI18N
-        jlUser.setText("User");
-        jPanel2.add(jlUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 110, -1));
+        titu2.setBackground(new java.awt.Color(0, 102, 102));
+        titu2.setFont(new java.awt.Font("Comic Sans MS", 1, 48)); // NOI18N
+        titu2.setForeground(new java.awt.Color(0, 0, 0));
+        titu2.setText("Menu");
+        jPanel2.add(titu2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 130, 120, 50));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 220, 600));
+        jPanel4.setBackground(new java.awt.Color(0, 0, 0));
+
+        jlabelDerechos.setBackground(new java.awt.Color(255, 255, 255));
+        jlabelDerechos.setFont(new java.awt.Font("Dialog", 1, 9)); // NOI18N
+        jlabelDerechos.setForeground(new java.awt.Color(255, 255, 255));
+        jlabelDerechos.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addComponent(jlabelDerechos, javax.swing.GroupLayout.PREFERRED_SIZE, 220, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlabelDerechos, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 530, 220, 50));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 230, 600));
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 0));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -128,7 +184,9 @@ public final class Menu extends javax.swing.JFrame {
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 780, 60));
 
-        jPanel_Menu.setBackground(new java.awt.Color(204, 204, 204));
+        jPanel_Menu.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel_Menu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel_Menu.setForeground(new java.awt.Color(255, 255, 255));
         jPanel_Menu.setLayout(new java.awt.BorderLayout());
         jPanel1.add(jPanel_Menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 780, 540));
 
@@ -153,7 +211,9 @@ public final class Menu extends javax.swing.JFrame {
 
     private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
         // TODO add your handling code here:Opciones
-
+        jPanel_Menu.removeAll();
+        jPanel_Menu.revalidate();
+        jPanel_Menu.repaint();
     }//GEN-LAST:event_jComboBox1MouseClicked
 
     private void jComboBox1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseEntered
@@ -167,6 +227,8 @@ public final class Menu extends javax.swing.JFrame {
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+
+        opcionesMenuListaSimple();
         /*
         getjLabel4().setText("Codigos registrados :" + arbol.getTamano());
         Opciones_CBynaryTree oE = new Opciones_CBynaryTree(this, arbol);
@@ -178,6 +240,29 @@ public final class Menu extends javax.swing.JFrame {
         jPanel_Menu.repaint();
          */
     }//GEN-LAST:event_jComboBox1ActionPerformed
+    public void opcionesMenuListaSimple() {
+        try (Scanner scanner = new Scanner(System.in)) {
+
+            System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, "UTF-8"));
+            if (jComboBox1.getSelectedIndex() == 1) {
+                System.out.println("Se seleccionó la opción 1");
+                FileGetAddress f = new FileGetAddress();
+                address = f.fileAddress();
+                JOptionPane.showMessageDialog(null, address);
+                ensamblador.cargarFragmentosDeArchivo(address);
+                Op1 oE = new Op1();
+                jPanel_Menu.removeAll();
+                oE.setSize(810, 540);
+                oE.setLocation(0, 0);
+                jPanel_Menu.add(oE, BorderLayout.CENTER);
+                jPanel_Menu.revalidate();
+                jPanel_Menu.repaint();
+
+            }
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
     private void derechos() {
 // Obtener año actual
@@ -228,12 +313,14 @@ public final class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel_Menu;
-    private javax.swing.JLabel jlUser;
     private javax.swing.JLabel jlabelDerechos;
+    private javax.swing.JLabel jlabelDerechos1;
     private javax.swing.JLabel titu1;
     private javax.swing.JLabel titu2;
+    private javax.swing.JLabel titu3;
     // End of variables declaration//GEN-END:variables
 
     public JLabel getjLabel1() {
@@ -298,14 +385,6 @@ public final class Menu extends javax.swing.JFrame {
 
     public void setjLabel4(JLabel jLabel4) {
         this.jLabel4 = jLabel4;
-    }
-
-    public JLabel getJlUser() {
-        return jlUser;
-    }
-
-    public void setJlUser(JLabel jlUser) {
-        this.jlUser = jlUser;
     }
 
     public JLabel getJlabelDerechos() {
