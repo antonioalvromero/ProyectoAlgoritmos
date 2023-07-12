@@ -5,9 +5,9 @@
  */
 package GUI.opciones;
 
-public final class Op1 extends javax.swing.JPanel {
+public final class Op3 extends javax.swing.JPanel {
 
-    public Op1() {
+    public Op3() {
         initComponents();
     }
 
@@ -36,23 +36,23 @@ public final class Op1 extends javax.swing.JPanel {
         titu7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         titu7.setText("exitosamente.");
         titu7.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        add(titu7, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 290, -1, -1));
+        add(titu7, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 280, -1, -1));
 
         titu6.setBackground(new java.awt.Color(0, 102, 102));
         titu6.setFont(new java.awt.Font("Dialog", 1, 48)); // NOI18N
         titu6.setForeground(new java.awt.Color(0, 0, 0));
         titu6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titu6.setText("Fragmentos cargados ");
+        titu6.setText("Matriz de traslapes creada");
         titu6.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(0, 0, 0)));
-        add(titu6, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 190, -1, -1));
+        add(titu6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 180, -1, -1));
 
         titu8.setBackground(new java.awt.Color(0, 102, 102));
-        titu8.setFont(new java.awt.Font("Franklin Gothic Demi", 3, 70)); // NOI18N
+        titu8.setFont(new java.awt.Font("Franklin Gothic Demi", 3, 65)); // NOI18N
         titu8.setForeground(new java.awt.Color(0, 0, 0));
         titu8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        titu8.setText("Cargar fragmentos");
+        titu8.setText("Crear matriz de traslapes");
         titu8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        add(titu8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 630, 90));
+        add(titu8, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 40, -1, 90));
     }// </editor-fold>//GEN-END:initComponents
 
 

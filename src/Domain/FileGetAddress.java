@@ -10,17 +10,22 @@ public class FileGetAddress {
     }
 
     public String fileAddress() {
-        JFileChooser jChooser = new JFileChooser();
-        jChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-        jChooser.setAcceptAllFileFilterUsed(true);
+        try {
+            JFileChooser jChooser = new JFileChooser();
+            jChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+            jChooser.setAcceptAllFileFilterUsed(true);
 
-        int option = jChooser.showOpenDialog(null);
+            int option = jChooser.showOpenDialog(null);
 
-        if (option == JFileChooser.APPROVE_OPTION) {
-            address = jChooser.getSelectedFile().getAbsolutePath();
+            if (option == JFileChooser.APPROVE_OPTION) {
+                address = jChooser.getSelectedFile().getAbsolutePath();
+            } else {
+                address = "404";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return address;
     }
 }
-

@@ -18,28 +18,31 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import Domain.*;
 import GUI.opciones.Op1;
+import GUI.opciones.Op10;
+import GUI.opciones.Op2;
+import GUI.opciones.Op3;
+import GUI.opciones.Op4;
+import GUI.opciones.Op404;
+import GUI.opciones.Op5;
+import GUI.opciones.Op6;
+import GUI.opciones.Op7;
+import GUI.opciones.Op8;
+import GUI.opciones.Op9;
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.JOptionPane;
+import javax.swing.JTextArea;
+import javax.swing.Timer;
 
 public final class Menu extends javax.swing.JFrame {
 
     String address = "";
     EnsambladorDeFragmentosPrueba ensamblador;
+    private int index = 0;
+    boolean[] check = {false, false, false, false};
 
     public Menu() {
-
-        super.setUndecorated(false);
-        initComponents();
-        super.setLocationRelativeTo(null);
-        super.setResizable(false);
-        derechos();
-        this.setVisible(true);
-        //  getjLabel4().setText("Codigos registrados: " + arbol.getTamano());
-
-    }
-
-    public Menu(boolean check) {
-
         ensamblador = new EnsambladorDeFragmentosPrueba();
         super.setUndecorated(false);
         initComponents();
@@ -47,8 +50,16 @@ public final class Menu extends javax.swing.JFrame {
         super.setResizable(false);
         derechos();
         this.setVisible(true);
-        //  getjLabel4().setText("Codigos registrados: " + arbol.getTamano());
-
+        String palabra = "Se debe respetar el orden de las opciones o tendras problemas, una ves ejecutado la opcion 1,\n"
+                + "la opcion dos se desbloqueara y asi susesivamente.\n"
+                + "si vas por las opcion 3 y te devuelves a la opcion 1, no tendras ningun problema.\n"
+                + "el orden de las  Opciones es:\n"
+                + "1. Cargar fragmentos\n"
+                + "2. Fragmentos aleatorios\n"
+                + "3. Crear matriz de traslapes\n"
+                + "4. Ensamblar fragmentos";
+        String palabraLabel = "El proyecto consiste en desarrollar un programa que reconstruye un texto original a partir de fragmentos de texto, utilizando una aproximación al algoritmo de Superhilera Mínima Común.";
+        iniciar(palabra, palabraLabel);
     }
 
     /**
@@ -73,6 +84,9 @@ public final class Menu extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPanel_Menu = new javax.swing.JPanel();
+        titu8 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,7 +126,7 @@ public final class Menu extends javax.swing.JFrame {
         jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
         jComboBox1.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         jComboBox1.setForeground(new java.awt.Color(0, 0, 0));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "  Opciones", "1. Cargar fragmentos" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "  Opciones", "1. Cargar fragmentos", "2. Fragmentos aleatorios", "3. Crear matriz de traslapes", "4. Ensamblar fragmentos", "5. Guardar ensamblado en archivo", "6. Calcular similitud con hilera original", "7. Listar fragmentos", "8. Ordenar alfabéticamente", "9. Filtrar fragmentos por longitud", "10. Buscar fragmentos por palabra clave", "11. Generar grafo conexo mínimo" }));
         jComboBox1.setBorder(null);
         jComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jComboBox1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -170,17 +184,17 @@ public final class Menu extends javax.swing.JFrame {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.foreground"));
-        jLabel4.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 10)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Fragmentos registrados: 0");
+        jLabel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel4MouseClicked(evt);
             }
         });
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 10, 280, 36));
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 760, 36));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 780, 60));
 
@@ -188,6 +202,23 @@ public final class Menu extends javax.swing.JFrame {
         jPanel_Menu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel_Menu.setForeground(new java.awt.Color(255, 255, 255));
         jPanel_Menu.setLayout(new java.awt.BorderLayout());
+
+        titu8.setBackground(new java.awt.Color(255, 0, 0));
+        titu8.setFont(new java.awt.Font("Franklin Gothic Demi", 2, 100)); // NOI18N
+        titu8.setForeground(new java.awt.Color(0, 0, 0));
+        titu8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titu8.setText("Instrucciones");
+        titu8.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel_Menu.add(titu8, java.awt.BorderLayout.CENTER);
+
+        jTextArea1.setBackground(new java.awt.Color(0, 0, 0));
+        jTextArea1.setColumns(20);
+        jTextArea1.setForeground(new java.awt.Color(255, 255, 255));
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jPanel_Menu.add(jScrollPane1, java.awt.BorderLayout.PAGE_END);
+
         jPanel1.add(jPanel_Menu, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 60, 780, 540));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -211,9 +242,6 @@ public final class Menu extends javax.swing.JFrame {
 
     private void jComboBox1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseClicked
         // TODO add your handling code here:Opciones
-        jPanel_Menu.removeAll();
-        jPanel_Menu.revalidate();
-        jPanel_Menu.repaint();
     }//GEN-LAST:event_jComboBox1MouseClicked
 
     private void jComboBox1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jComboBox1MouseEntered
@@ -226,19 +254,7 @@ public final class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1MousePressed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
-        // TODO add your handling code here:
-
         opcionesMenuListaSimple();
-        /*
-        getjLabel4().setText("Codigos registrados :" + arbol.getTamano());
-        Opciones_CBynaryTree oE = new Opciones_CBynaryTree(this, arbol);
-        jPanel_Menu.removeAll();
-        oE.setSize(810, 540);
-        oE.setLocation(0, 0);
-        jPanel_Menu.add(oE, BorderLayout.CENTER);
-        jPanel_Menu.revalidate();
-        jPanel_Menu.repaint();
-         */
     }//GEN-LAST:event_jComboBox1ActionPerformed
     public void opcionesMenuListaSimple() {
         try (Scanner scanner = new Scanner(System.in)) {
@@ -248,15 +264,283 @@ public final class Menu extends javax.swing.JFrame {
                 System.out.println("Se seleccionó la opción 1");
                 FileGetAddress f = new FileGetAddress();
                 address = f.fileAddress();
-                JOptionPane.showMessageDialog(null, address);
-                ensamblador.cargarFragmentosDeArchivo(address);
-                Op1 oE = new Op1();
-                jPanel_Menu.removeAll();
-                oE.setSize(810, 540);
-                oE.setLocation(0, 0);
-                jPanel_Menu.add(oE, BorderLayout.CENTER);
-                jPanel_Menu.revalidate();
-                jPanel_Menu.repaint();
+
+                if (!address.equalsIgnoreCase("404")) {
+                    check[0] = true;
+                    ensamblador.cargarFragmentosDeArchivo(address);
+                    Op1 oP = new Op1();
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                } else {
+                    Op404 oP = new Op404();
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                }
+
+            }
+            //////////////
+            if (jComboBox1.getSelectedIndex() == 2) {
+                System.out.println("Se seleccionó la opción 2");
+
+                if (!address.equalsIgnoreCase("404") && check[0]) {
+                    check[1] = true;
+                    Op2 oP = new Op2(address, ensamblador);//se genera dentro de la clase
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                } else {
+                    Op404 oP = new Op404();
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                }
+
+            }
+            /////////////
+            if (jComboBox1.getSelectedIndex() == 3) {
+                System.out.println("Se seleccionó la opción 3");
+                if (!address.equalsIgnoreCase("404") && check[1]) {
+                    check[2] = true;
+                    ensamblador.crearMatrizTraslapes();
+                    Op3 oP = new Op3();
+
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                } else {
+                    Op404 oP = new Op404();
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                }
+
+            }
+            /////////////
+            if (jComboBox1.getSelectedIndex() == 4) {
+                System.out.println("Se seleccionó la opción 4");
+                if (!address.equalsIgnoreCase("404") && check[2]) {
+                    check[3] = true;
+                    ensamblador.ensambla(5);
+                    Op4 oP = new Op4();
+
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                } else {
+                    Op404 oP = new Op404();
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                }
+
+            }
+
+            //////////
+            if (jComboBox1.getSelectedIndex() == 5) {
+                System.out.println("Se seleccionó la opción 5");
+
+                int opcion = JOptionPane.showOptionDialog(null, "¿Deseas Guardar los fragmentos en un archivo nuevo?", "Confirmación", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, new Object[]{"Sí", "No"}, "Sí");
+
+                if (opcion == JOptionPane.YES_OPTION) {
+                    FileGetAddress f = new FileGetAddress();
+                    ensamblador.guardaEnsambladoEnArchivo(f.fileAddress());
+                } else if (opcion == JOptionPane.NO_OPTION) {
+                    ensamblador.guardaEnsambladoEnArchivo(address);
+                }
+                if (!address.equalsIgnoreCase("404") && check[3]) {
+                    check[3] = true;
+                    ensamblador.guardaEnsambladoEnArchivo(address);
+                    Op5 oP = new Op5();
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                } else {
+                    Op404 oP = new Op404();
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                }
+
+            }
+
+            /////////////
+            if (jComboBox1.getSelectedIndex() == 6) {
+                System.out.println("Se seleccionó la opción 6");
+                if (!address.equalsIgnoreCase("404") && check[3]) {
+
+                    String hileraOriginal = ensamblador.hileraOriginalDesdeArchivo(address);
+                    double similitud = ensamblador.calculaSimilitud(hileraOriginal);
+                    Op6 oP = new Op6(String.valueOf(similitud));
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                } else {
+                    Op404 oP = new Op404();
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                }
+
+            }
+            /////////////
+            if (jComboBox1.getSelectedIndex() == 7) {
+                System.out.println("Se seleccionó la opción 7");
+                if (!address.equalsIgnoreCase("404") && check[3]) {
+                    ensamblador.listarFragmentos();
+                    String data = ensamblador.getDataListar();
+                    Op7 oP = new Op7(data);
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                } else {
+                    Op404 oP = new Op404();
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                }
+
+            }
+
+            /////////////
+            if (jComboBox1.getSelectedIndex() == 8) {
+                System.out.println("Se seleccionó la opción 8");
+                if (!address.equalsIgnoreCase("404") && check[3]) {
+                    ensamblador.ordenarAlfabetico();
+                    Op8 oP = new Op8();
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                } else {
+                    Op404 oP = new Op404();
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                }
+
+            }
+
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        try (Scanner scanner = new Scanner(System.in)) {
+            System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, "UTF-8"));
+            /////////////
+            if (jComboBox1.getSelectedIndex() == 9) {
+                System.out.println("Se seleccionó la opción 9");
+                if (!address.equalsIgnoreCase("404") && check[3]) {
+                    int longitudMinima = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la longitud mínima:"));
+                    ensamblador.filtrarPorLongitud(longitudMinima);
+                    Op9 oP = new Op9();
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                } else {
+                    Op404 oP = new Op404();
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                }
+
+            }
+
+            /////////////
+            if (jComboBox1.getSelectedIndex() == 10) {
+                System.out.println("Se seleccionó la opción 10");
+                if (!address.equalsIgnoreCase("404") && check[3]) {
+
+                    ensamblador.buscarPorPalabraClave(JOptionPane.showInputDialog("Ingrese la palabra clave: "));
+
+                } else {
+                    Op404 oP = new Op404();
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                }
+
+            }
+
+            /////////////
+            if (jComboBox1.getSelectedIndex() == 11) {
+                System.out.println("Se seleccionó la opción 11");
+                if (!address.equalsIgnoreCase("404") && check[3]) {
+                    ensamblador.generarGrafoConexoMinimo();
+                    Op10 oP = new Op10();
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+
+                } else {
+                    Op404 oP = new Op404();
+                    jPanel_Menu.removeAll();
+                    oP.setSize(810, 540);
+                    oP.setLocation(0, 0);
+                    jPanel_Menu.add(oP, BorderLayout.CENTER);
+                    jPanel_Menu.revalidate();
+                    jPanel_Menu.repaint();
+                }
 
             }
         } catch (UnsupportedEncodingException ex) {
@@ -265,12 +549,43 @@ public final class Menu extends javax.swing.JFrame {
     }
 
     private void derechos() {
-// Obtener año actual
+        // Obtener año actual
         int anioActual = java.time.Year.now().getValue();
 
         // Mensaje de derechos reservados
         String mensajePieDeAplicacion = "© " + anioActual + " Todos los derechos reservados.";
         jlabelDerechos.setText(mensajePieDeAplicacion);
+    }
+
+    public void iniciar(String palabra, String palabraLabel) {
+        jTextArea1.setText("");
+        index = 0;
+        jLabel4.setText(""); // Limpia el texto anterior en el JLabel
+
+        Timer timer = new Timer(100, new ActionListener() {
+            String data = "";
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (index >= palabra.length()) {
+                    ((Timer) e.getSource()).stop();
+                    jLabel4.setText("\\\\(^_^)/");
+
+                } else {
+                    if (index < palabraLabel.length()) {
+                        data += Character.toString(palabraLabel.charAt(index));
+                        jLabel4.setText(data);
+                    } else if (data.length() > 0) {
+                        data = data.substring(1);
+                        jLabel4.setText(data);
+                    }
+                    jTextArea1.append(Character.toString(palabra.charAt(index)));
+                    index++;
+                }
+            }
+        });
+
+        timer.start();
     }
 
     /**
@@ -316,11 +631,14 @@ public final class Menu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel_Menu;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel jlabelDerechos;
     private javax.swing.JLabel jlabelDerechos1;
     private javax.swing.JLabel titu1;
     private javax.swing.JLabel titu2;
     private javax.swing.JLabel titu3;
+    private javax.swing.JLabel titu8;
     // End of variables declaration//GEN-END:variables
 
     public JLabel getjLabel1() {

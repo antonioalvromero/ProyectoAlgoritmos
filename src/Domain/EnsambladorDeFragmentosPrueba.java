@@ -6,6 +6,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import javax.swing.JOptionPane;
+
 public class EnsambladorDeFragmentosPrueba {
 
     private NodoFragmento inicio; // Inicio de la lista enlazada de fragmentos cargados
@@ -57,6 +59,7 @@ public class EnsambladorDeFragmentosPrueba {
                 writer.write(actual.getFragmento());
                 writer.newLine();
                 actual = actual.getSiguiente();
+                System.out.println("Domain.EnsambladorDeFragmentosPrueba.guardaEnsambladoEnArchivo()");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -196,6 +199,7 @@ public class EnsambladorDeFragmentosPrueba {
     public void ensambla(int tamanioMinimoTraslape) {
         int fragmentoInicial = 0;
         int siguienteFragmento;
+        String data = " ";
         boolean hayIslas = false;
         List<String> islas = new ArrayList<>(); // Lista para almacenar los fragmentos que forman islas
 
@@ -220,12 +224,16 @@ public class EnsambladorDeFragmentosPrueba {
 
         if (hayIslas) {
             System.out.println("Se encontraron islas en el ensamblaje.");
+            JOptionPane.showMessageDialog(null, "Se encontraron islas en el ensamblaje.");
             System.out.println("Fragmentos que forman islas:");
 
             for (String isla : islas) {
+                data += islas + "\n";
                 System.out.println(isla);
             }
+            JOptionPane.showMessageDialog(null, "Fragmentos que forman islas:" + data);
         } else {
+            JOptionPane.showMessageDialog(null, "No Se encontraron islas en el ensamblaje.");
             System.out.println("No se encontraron islas en el ensamblaje.");
         }
     }
@@ -301,14 +309,24 @@ public class EnsambladorDeFragmentosPrueba {
             actual.setSiguiente(nuevoNodo);
         }
     }
+    String dataListarF = "";
 
-// Listar los fragmentos cargados
+    // Listar los fragmentos cargados
     public void listarFragmentos() {
         NodoFragmento actual = inicio;
         while (actual != null) {
             System.out.println(actual.getFragmento());
+            dataListarF += actual.getFragmento();
             actual = actual.getSiguiente();
         }
+    }
+
+    public String getDataListar() {
+        return dataListarF;
+    }
+
+    public void setDataListar(String data) {
+        this.dataListarF = data;
     }
 
 // Ordenar los fragmentos alfabéticamente usando Quicksort
@@ -383,16 +401,19 @@ public class EnsambladorDeFragmentosPrueba {
     public void buscarPorPalabraClave(String keyword) {
         boolean seEncontraronCoincidencias = false;
         NodoFragmento actual = inicio;
+        String data = " ";
         while (actual != null) {
             if (actual.getFragmento().contains(keyword)) {
                 System.out.println(actual.getFragmento());
+                data += actual.getFragmento();
                 seEncontraronCoincidencias = true;
             }
             actual = actual.getSiguiente();
         }
-
+        JOptionPane.showMessageDialog(null, "Palabra:" + data);
         if (!seEncontraronCoincidencias) {
             System.out.println("No se encontraron coincidencias.");
+            JOptionPane.showMessageDialog(null, "No se encontraron coincidencias.");
         }
     }
 
