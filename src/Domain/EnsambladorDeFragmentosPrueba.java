@@ -404,7 +404,6 @@ public class EnsambladorDeFragmentosPrueba {
             if (ptr.getFragmento().length() > length) {
                 System.out.println("Entra a agregar");
                 agregarFragmento(ptr.getFragmento());
-
             }
 
             ptr = ptr.getSiguiente();
