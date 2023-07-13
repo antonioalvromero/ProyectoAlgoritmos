@@ -11,30 +11,37 @@ import javax.swing.JOptionPane;
 public class EnsambladorDeFragmentosPrueba {
 
     private NodoFragmento inicio; // Inicio de la lista enlazada de fragmentos cargados
+    private NodoFragmento fin; // final de la lista enlazada de fragmentos cargados
     private NodoFragmento ensambladoInicio; // Inicio de la lista enlazada de fragmentos ensamblados
     private int[][] matrizTraslapes; // Matriz de traslapes
     private boolean[] fragmentosUsados; // Marcador de fragmentos utilizados en el ensamblaje
 
     public EnsambladorDeFragmentosPrueba() {
         inicio = null;
+        fin = null;
         ensambladoInicio = null;
     }
 
     public void agregarFragmento(String fragmento) {
+
         NodoFragmento nuevoFragmento = new NodoFragmento(fragmento);
         if (inicio == null) {
             inicio = nuevoFragmento;
+            fin = nuevoFragmento;
         } else {
             NodoFragmento actual = inicio;
             while (actual.getSiguiente() != null) {
                 actual = actual.getSiguiente();
+                System.out.println("Domain.EnsambladorDeFragmentosPrueba.agregarFragmento()");
             }
             actual.setSiguiente(nuevoFragmento);
+
         }
     }
 
     // Carga los fragmentos desde un archivo
     public void cargarFragmentosDeArchivo(String filename) {
+        System.out.println("cargar Fragmento");
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
             StringBuilder fragmentBuilder = new StringBuilder();
             String line;
@@ -43,8 +50,10 @@ public class EnsambladorDeFragmentosPrueba {
                 fragmentBuilder.append(System.lineSeparator()); // Agregar separador de línea
             }
             String[] arrayFragmentos = fragmentBuilder.toString().split("\\R"); // Dividir fragmentos utilizando separadores de línea
+            System.out.println(arrayFragmentos.length);
             for (String fragmento : arrayFragmentos) {
                 agregarFragmento(fragmento);
+
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -388,13 +397,31 @@ public class EnsambladorDeFragmentosPrueba {
     public void filtrarPorLongitud(int length) {
         NodoFragmento fragmentosFiltrados = null;
         NodoFragmento actual = inicio;
-        while (actual != null) {
-            if (actual.getFragmento().length() > length) {
-                agregarFragmento(actual.getFragmento());
+        NodoFragmento ptr = inicio;
+        int cont = 0;
+        while (ptr != null) {
+
+            if (ptr.getFragmento().length() > length) {
+                System.out.println("Entra a agregar");
+                agregarFragmento(ptr.getFragmento());
+
             }
+
+            ptr = ptr.getSiguiente();
+
+        }
+        System.out.println("Salio de filtrar");
+    }
+
+    // Imprimir
+    public int getTamano() {
+        int tamano = 0;
+        NodoFragmento actual = inicio;
+        while (actual != null) {
+            tamano++;
             actual = actual.getSiguiente();
         }
-        System.out.println("Domain.EnsambladorDeFragmentosPrueba.filtrarPorLongitud()");
+        return tamano;
     }
 
 // Buscar fragmentos por palabras clave

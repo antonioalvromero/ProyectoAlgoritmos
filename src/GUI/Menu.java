@@ -40,7 +40,8 @@ public final class Menu extends javax.swing.JFrame {
     String address = "";
     EnsambladorDeFragmentosPrueba ensamblador;
     private int index = 0;
-    boolean[] check = {false, false, false, false};
+    // boolean[] check = {false, false, false, false};
+    boolean[] check = {true, true, true, true};
 
     public Menu() {
         ensamblador = new EnsambladorDeFragmentosPrueba();
@@ -57,7 +58,8 @@ public final class Menu extends javax.swing.JFrame {
                 + "1. Cargar fragmentos\n"
                 + "2. Fragmentos aleatorios\n"
                 + "3. Crear matriz de traslapes\n"
-                + "4. Ensamblar fragmentos";
+                + "4. Ensamblar fragmentos\n"
+                + "Si ya el archivo esta fragmentado, no hay necesidad de hacer el paso 2. Fragmentos aleatorios";
         String palabraLabel = "El proyecto consiste en desarrollar un programa que reconstruye un texto original a partir de fragmentos de texto, utilizando una aproximación al algoritmo de Superhilera Mínima Común.";
         iniciar(palabra, palabraLabel);
     }
@@ -258,7 +260,8 @@ public final class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
     public void opcionesMenuListaSimple() {
         try (Scanner scanner = new Scanner(System.in)) {
-
+            System.err.println("Tamano:"+ensamblador.getTamano()); 
+            
             System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, "UTF-8"));
             if (jComboBox1.getSelectedIndex() == 1) {
                 System.out.println("Se seleccionó la opción 1");
@@ -369,8 +372,10 @@ public final class Menu extends javax.swing.JFrame {
 
                 if (opcion == JOptionPane.YES_OPTION) {
                     FileGetAddress f = new FileGetAddress();
+                    //f.fileAddress()
                     ensamblador.guardaEnsambladoEnArchivo(f.fileAddress());
                 } else if (opcion == JOptionPane.NO_OPTION) {
+                    System.err.println(address);
                     ensamblador.guardaEnsambladoEnArchivo(address);
                 }
                 if (!address.equalsIgnoreCase("404") && check[3]) {
