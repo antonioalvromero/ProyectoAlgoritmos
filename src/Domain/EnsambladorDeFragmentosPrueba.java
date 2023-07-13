@@ -1,5 +1,8 @@
 package Domain;
 
+import java.awt.GridLayout;
+import javax.swing.*;
+
 import java.util.*;
 import java.io.*;
 import java.io.BufferedReader;
@@ -393,21 +396,14 @@ public class EnsambladorDeFragmentosPrueba {
         return inicio;
     }
 
-// Filtrar fragmentos por longitud mayor que un valor dado
     public void filtrarPorLongitud(int length) {
-        NodoFragmento fragmentosFiltrados = null;
-        NodoFragmento actual = inicio;
         NodoFragmento ptr = inicio;
-        int cont = 0;
         while (ptr != null) {
-
-            if (ptr.getFragmento().length() > length) {
-                System.out.println("Entra a agregar");
-                agregarFragmento(ptr.getFragmento());
+            String fragmento = ptr.getFragmento();
+            if (fragmento.length() >= length) {
+                System.out.println("Filtrar:" + fragmento);
             }
-
             ptr = ptr.getSiguiente();
-
         }
         System.out.println("Salio de filtrar");
     }
@@ -489,6 +485,7 @@ public class EnsambladorDeFragmentosPrueba {
                 visitado[u] = true;
             }
             for (int v = 0; v < contadorFragmentos; v++) {
+
                 if (!visitado[v] && matrizAdyacencia[u][v] != 0 && matrizAdyacencia[u][v] < distancia[v]) {
                     padre[v] = u;
                     distancia[v] = matrizAdyacencia[u][v];
@@ -503,6 +500,50 @@ public class EnsambladorDeFragmentosPrueba {
                 agregarFragmentoEnsamblado(matrizAdyacencia[padre[k]][k] + "");
             }
         }
+        imprimirGrafo(matrizAdyacencia);
+    }
+
+    public int minimaDistancia(int[] distancia, boolean[] visitado, int contadorFragmentos) {
+        int min = Integer.MAX_VALUE;
+        int minIndex = -1;
+        for (int v = 0; v < contadorFragmentos; v++) {
+            if (!visitado[v] && distancia[v] < min) {
+                min = distancia[v];
+                minIndex = v;
+            }
+        }
+        return minIndex;
+    }
+
+    public void imprimirGrafo(int[][] matrizAdyacencia) {
+
+        int contadorFragmentos = matrizAdyacencia.length;
+
+        for (int i = 0; i < contadorFragmentos; i++) {
+            for (int j = 0; j < contadorFragmentos; j++) {
+                int pesoArista = matrizAdyacencia[i][j];
+                System.out.print("[" + i + " - " + j + "] : " + pesoArista + "   ");
+            }
+            System.out.println();
+        }
+
+        JFrame frame = new JFrame("Grafo Conexo Mínimo");
+        JPanel panel = new JPanel(new GridLayout(contadorFragmentos, contadorFragmentos));
+
+        for (int i = 0; i < contadorFragmentos; i++) {
+            for (int j = 0; j < contadorFragmentos; j++) {
+                int pesoArista = matrizAdyacencia[i][j];
+                JLabel label = new JLabel("[" + i + " - " + j + "] : " + pesoArista);
+                panel.add(label);
+            }
+        }
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.getContentPane().add(panel);
+        frame.pack();
+        frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
+        frame.setSize(800, 800);
     }
 
     private int calcularSuperposicion(String fragmento1, String fragmento2) {
@@ -516,19 +557,6 @@ public class EnsambladorDeFragmentosPrueba {
             }
         }
         return 0;
-    }
-
-    // Función para encontrar el vértice con la distancia mínima no visitada
-    public int minimaDistancia(int[] distancia, boolean[] visitado, int contadorFragmentos) {
-        int minimaDist = Integer.MAX_VALUE;
-        int minimaDistIndice = -1;
-        for (int i = 0; i < contadorFragmentos; i++) {
-            if (!visitado[i] && distancia[i] < minimaDist) {
-                minimaDist = distancia[i];
-                minimaDistIndice = i;
-            }
-        }
-        return minimaDistIndice;
     }
 
     public static void main(String[] args) {
