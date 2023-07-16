@@ -319,6 +319,7 @@ public final class Menu extends javax.swing.JFrame {
                 if (!address.equalsIgnoreCase("404") && check[1]) {
                     check[2] = true;
                     ensamblador.crearMatrizTraslapes();
+                    ensamblador.imprimirMatrizTraslapes();
                     Op3 oP = new Op3();
 
                     jPanel_Menu.removeAll();
@@ -380,7 +381,7 @@ public final class Menu extends javax.swing.JFrame {
                 }
                 if (!address.equalsIgnoreCase("404") && check[3]) {
                     check[3] = true;
-                    ensamblador.guardaEnsambladoEnArchivo(address);
+//                    ensamblador.guardaEnsambladoEnArchivo(address);
                     Op5 oP = new Op5();
                     jPanel_Menu.removeAll();
                     oP.setSize(810, 540);
@@ -406,7 +407,9 @@ public final class Menu extends javax.swing.JFrame {
                 if (!address.equalsIgnoreCase("404") && check[3]) {
 
                     String hileraOriginal = ensamblador.hileraOriginalDesdeArchivo(address);
+                   
                     double similitud = ensamblador.calculaSimilitud(hileraOriginal);
+                    System.err.println(similitud);
                     Op6 oP = new Op6(String.valueOf(similitud));
                     jPanel_Menu.removeAll();
                     oP.setSize(810, 540);

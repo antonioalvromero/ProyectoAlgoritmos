@@ -9,6 +9,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import javax.swing.JOptionPane;
 
 public class EnsambladorDeFragmentosPrueba {
@@ -286,15 +288,31 @@ public class EnsambladorDeFragmentosPrueba {
         int longitudEnsamblado = cadenaEnsamblada.length();
         int longitudComun = 0;
 
-        int longitudMinima = Math.min(longitudOriginal, longitudEnsamblado); // Obtener la longitud mínima
+        int longitudMinima = Math.min(longitudOriginal, longitudEnsamblado);
 
         for (int i = 0; i < longitudMinima; i++) {
             if (hileraOriginal.charAt(i) == cadenaEnsamblada.charAt(i)) {
                 longitudComun++;
+            } else {
+                break; // Stop the loop if there is a mismatch
             }
         }
 
-        return (double) longitudComun / longitudEnsamblado * 100; // Calcular el porcentaje de similitud
+        double similitud = (double) longitudComun / longitudOriginal * 100;
+
+        // Format the similarity value with two decimal places
+        DecimalFormatSymbols symbols = new DecimalFormatSymbols(Locale.US);
+        symbols.setDecimalSeparator('.');
+        DecimalFormat df = new DecimalFormat("#.00", symbols);
+        String similitudFormatted = df.format(similitud);
+
+        System.out.println("Original String: " + hileraOriginal);
+        System.out.println("Ensamblado String: " + cadenaEnsamblada);
+        System.out.println("Matching : " + longitudComun);
+        System.out.println("Original Length: " + longitudOriginal);
+        System.out.println("Similitud: " + similitudFormatted + "%");
+
+        return Double.parseDouble(similitudFormatted);
     }
 
 // Concatena los fragmentos en una cadena
@@ -565,8 +583,10 @@ public class EnsambladorDeFragmentosPrueba {
         ensamblador.crearMatrizTraslapes();
         ensamblador.imprimirMatrizTraslapes();
         ensamblador.ensambla(10);//Se le indica min de Traslapes
-        ensamblador.generarGrafoConexoMinimo();
         ensamblador.guardaEnsambladoEnArchivo("D:/Codigo/ensamblaje.txt");
+        System.out.println(ensamblador.calculaSimilitud("Este es el fragmento 1.Aquí está el fragmento 2.Fragmento número 3 en esta línea.Otro fragmento más, el número 4.¡Fragmento 5 presente!"));
+//        ensamblador.generarGrafoConexoMinimo();
+
         System.out.println("Ensamblado completado.");
     }
 }
