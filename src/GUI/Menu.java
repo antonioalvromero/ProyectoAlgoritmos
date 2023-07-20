@@ -40,7 +40,7 @@ public final class Menu extends javax.swing.JFrame {
     String address = "";
     EnsambladorDeFragmentosPrueba ensamblador;
     private int index = 0;
-    // boolean[] check = {false, false, false, false};
+    //boolean[] check = {false, false, false, false};
     boolean[] check = {true, true, true, true};
 
     public Menu() {
@@ -83,6 +83,7 @@ public final class Menu extends javax.swing.JFrame {
         titu2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jlabelDerechos = new javax.swing.JLabel();
+        titu9 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPanel_Menu = new javax.swing.JPanel();
@@ -180,6 +181,19 @@ public final class Menu extends javax.swing.JFrame {
 
         jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 530, 220, 50));
 
+        titu9.setBackground(new java.awt.Color(0, 102, 102));
+        titu9.setFont(new java.awt.Font("Franklin Gothic Demi", 3, 14)); // NOI18N
+        titu9.setForeground(new java.awt.Color(0, 0, 0));
+        titu9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        titu9.setText("Reiniciar");
+        titu9.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        titu9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                titu9MouseClicked(evt);
+            }
+        });
+        jPanel2.add(titu9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 150, 40));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-10, 0, 230, 600));
 
         jPanel3.setBackground(new java.awt.Color(0, 0, 0));
@@ -258,10 +272,16 @@ public final class Menu extends javax.swing.JFrame {
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         opcionesMenuListaSimple();
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void titu9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titu9MouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+        new Menu();
+    }//GEN-LAST:event_titu9MouseClicked
     public void opcionesMenuListaSimple() {
         try (Scanner scanner = new Scanner(System.in)) {
-            System.err.println("Tamano:"+ensamblador.getTamano()); 
-            
+            System.err.println("Tamano:" + ensamblador.getTamano());
+
             System.setOut(new PrintStream(new FileOutputStream(FileDescriptor.out), true, "UTF-8"));
             if (jComboBox1.getSelectedIndex() == 1) {
                 System.out.println("Se seleccionó la opción 1");
@@ -293,7 +313,7 @@ public final class Menu extends javax.swing.JFrame {
             if (jComboBox1.getSelectedIndex() == 2) {
                 System.out.println("Se seleccionó la opción 2");
 
-                if (!address.equalsIgnoreCase("404") && check[0]) {
+                if (!address.equalsIgnoreCase("404")) {
                     check[1] = true;
                     Op2 oP = new Op2(address, ensamblador);//se genera dentro de la clase
                     jPanel_Menu.removeAll();
@@ -316,7 +336,7 @@ public final class Menu extends javax.swing.JFrame {
             /////////////
             if (jComboBox1.getSelectedIndex() == 3) {
                 System.out.println("Se seleccionó la opción 3");
-                if (!address.equalsIgnoreCase("404") && check[1]) {
+                if (!address.equalsIgnoreCase("404") && check[0]) {
                     check[2] = true;
                     ensamblador.crearMatrizTraslapes();
                     ensamblador.imprimirMatrizTraslapes();
@@ -344,7 +364,7 @@ public final class Menu extends javax.swing.JFrame {
                 System.out.println("Se seleccionó la opción 4");
                 if (!address.equalsIgnoreCase("404") && check[2]) {
                     check[3] = true;
-                    ensamblador.ensambla(5);
+                    ensamblador.ensambla(Integer.parseInt(JOptionPane.showInputDialog("Tamano de Traslapes")));
                     Op4 oP = new Op4();
 
                     jPanel_Menu.removeAll();
@@ -407,7 +427,7 @@ public final class Menu extends javax.swing.JFrame {
                 if (!address.equalsIgnoreCase("404") && check[3]) {
 
                     String hileraOriginal = ensamblador.hileraOriginalDesdeArchivo(address);
-                   
+
                     double similitud = ensamblador.calculaSimilitud(hileraOriginal);
                     System.err.println(similitud);
                     Op6 oP = new Op6(String.valueOf(similitud));
@@ -489,6 +509,7 @@ public final class Menu extends javax.swing.JFrame {
                 if (!address.equalsIgnoreCase("404") && check[3]) {
                     int longitudMinima = Integer.parseInt(JOptionPane.showInputDialog("Ingrese la longitud mínima:"));
                     ensamblador.filtrarPorLongitud(longitudMinima);
+                    JOptionPane.showMessageDialog(null, ensamblador.getDataFiltrarPorLongitud());
                     Op9 oP = new Op9();
                     jPanel_Menu.removeAll();
                     oP.setSize(810, 540);
@@ -647,6 +668,7 @@ public final class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel titu2;
     private javax.swing.JLabel titu3;
     private javax.swing.JLabel titu8;
+    private javax.swing.JLabel titu9;
     // End of variables declaration//GEN-END:variables
 
     public JLabel getjLabel1() {

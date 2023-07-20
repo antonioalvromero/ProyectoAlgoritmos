@@ -8,13 +8,13 @@ import java.io.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import javax.swing.JOptionPane;
 
 public class EnsambladorDeFragmentosPrueba {
 
+    private String filtrarPorLongitudData;
     private NodoFragmento inicio; // Inicio de la lista enlazada de fragmentos cargados
     private NodoFragmento fin; // final de la lista enlazada de fragmentos cargados
     private NodoFragmento ensambladoInicio; // Inicio de la lista enlazada de fragmentos ensamblados
@@ -416,15 +416,27 @@ public class EnsambladorDeFragmentosPrueba {
 
     public void filtrarPorLongitud(int length) {
         NodoFragmento ptr = inicio;
+       filtrarPorLongitudData = "Filtrar:";
         while (ptr != null) {
             String fragmento = ptr.getFragmento();
             if (fragmento.length() >= length) {
                 System.out.println("Filtrar:" + fragmento);
+                filtrarPorLongitudData += fragmento + "\n";
             }
             ptr = ptr.getSiguiente();
         }
         System.out.println("Salio de filtrar");
     }
+
+    public String getDataFiltrarPorLongitud() {
+        return filtrarPorLongitudData;
+    }
+
+    public void setDataFiltrarPorLongitud(String data) {
+        this.filtrarPorLongitudData = data;
+    }
+
+   
 
     // Imprimir
     public int getTamano() {
